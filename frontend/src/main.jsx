@@ -13,7 +13,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App";
+import App from "./App.jsx";
 
 // 1. Import your ThemeProvider here
 import { ThemeProvider } from "./context/ThemeContext"; 
