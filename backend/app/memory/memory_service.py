@@ -1,6 +1,7 @@
 from app.memory.embeddings import get_embedding
 from app.memory.faiss_db import add_memory, search_memory
 
+
 def save_memory(question: str, answer: str):
     text = f"Question: {question}\nAnswer: {answer}"
 
@@ -19,4 +20,10 @@ def save_memory(question: str, answer: str):
 
 def retrieve_memory(query: str):
     embedding = get_embedding(query)
-    return search_memory(embedding)
+    memories = search_memory(embedding)
+
+    print("\n========== Retrieved Memories ==========")
+    print(memories)
+    print("========================================\n")
+
+    return memories

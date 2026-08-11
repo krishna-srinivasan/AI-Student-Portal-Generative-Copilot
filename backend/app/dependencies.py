@@ -8,7 +8,11 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
 
+    print("Received Token:", token)
+
     payload = verify_token(token)
+
+    print("Decoded Payload:", payload)
 
     if payload is None:
         raise HTTPException(

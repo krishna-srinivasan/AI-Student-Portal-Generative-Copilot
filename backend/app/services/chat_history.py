@@ -2,10 +2,10 @@ from sqlalchemy.orm import Session
 from app.models import ChatHistory
 
 
-def save_chat(db: Session, user_id: int, question: str, answer: str):
+def save_chat(db: Session, conversation_id: int, question: str, answer: str):
 
     chat = ChatHistory(
-        user_id=user_id,
+        conversation_id=conversation_id,
         question=question,
         answer=answer
     )
@@ -14,11 +14,11 @@ def save_chat(db: Session, user_id: int, question: str, answer: str):
     db.commit()
 
 
-def get_chat_history(db: Session, user_id: int):
+def get_chat_history(db: Session, conversation_id: int):
 
     return (
         db.query(ChatHistory)
-        .filter(ChatHistory.user_id == user_id)
-        .order_by(ChatHistory.created_at.desc())
+        .filter(ChatHistory.conversation_id == conversation_id)
+        .order_by(ChatHistory.created_at.asc())
         .all()
     )
