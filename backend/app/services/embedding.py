@@ -18,7 +18,7 @@ client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_embedding(text: str):
     response = client.models.embed_content(
-        model='text-embedding-004',
+        model='gemini-embedding-001',
         contents=text,
         config=types.EmbedContentConfig(output_dimensionality=384)
     )
