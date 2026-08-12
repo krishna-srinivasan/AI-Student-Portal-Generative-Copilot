@@ -389,8 +389,167 @@ export default function JarvisPage() {
     window.speechSynthesis.speak(u);
   };
 
+  // const process = async (cmd) => {
+  //   // 1. CLEAN THE TEXT: Remove periods/commas that break voice recognition
+  //   let text = cmd.toLowerCase().trim().replace(/[.,!?]/g, "");
+  //   const currentUserName = localStorage.getItem("name") || "Boss";
+
+  //   if (text.includes("gold theme") || text.includes("golden theme")) {
+  //     setActiveTheme("gold");
+  //     speak("Activating golden interface, Sir.");
+  //     setStatus("THEME: GOLD ACTIVATED");
+  //     return;
+  //   }
+    
+  //   if (text.includes("cyan theme") || text.includes("original theme") || text.includes("default theme")) {
+  //     setActiveTheme("cyan");
+  //     speak("Reverting to original cyan interface, Sir.");
+  //     setStatus("THEME: CYAN ACTIVATED");
+  //     return;
+  //   }
+
+  //   if (text === "hi" || text === "hello" || text.includes("hi jarvis") || text.includes("hello jarvis")) {
+  //     setStatus("GREETING DETECTED");
+  //     speak(`Hello, ${currentUserName}. You are my boss, and all systems are online. I am ready to assist with your education and studies today. What shall we work on?`);
+  //     return;
+  //   }
+
+  //   if (text.includes("who is your developer") || text.includes("who is your boss") || text.includes("who created you")) {
+  //     setStatus("IDENTITY QUERY");
+  //     speak("Krishna is my boss and my developer. He is currently studying in his final year of M.C.A. in Generative A.I. at S.R.M. University.");
+  //     return;
+  //   }
+
+  //   // ==========================================
+  //   // MOBILE VOICE CALLING FEATURE (FIXED)
+  //   // ==========================================
+  //   if (text.startsWith("call ")) {
+  //     let contactName = text.replace("call", "").trim();
+
+  //     // ALL keys MUST be strictly lowercase to match the voice input!
+  //     const phoneBook = {
+  //       "amma": "+916382965810", 
+  //       "vahini sister": "+917305923367",
+  //       "preethi": "+917639593488",
+  //       "appa": "+919865191170",
+  //       "aachi": "+919976955448"
+  //     };
+
+  //     // Forgiving Search: Checks if the spoken name matches our phonebook
+  //     let foundNumber = null;
+  //     let confirmedName = "";
+
+  //     for (let key in phoneBook) {
+  //       if (contactName.includes(key) || key.includes(contactName)) {
+  //         foundNumber = phoneBook[key];
+  //         confirmedName = key;
+  //         break;
+  //       }
+  //     }
+
+  //     if (foundNumber) {
+  //       setStatus(`CALLING ${confirmedName.toUpperCase()}...`);
+  //       speak(`Right away, Sir. Initiating a secure line to ${confirmedName}.`);
+        
+  //       // Trick the browser into thinking the user physically clicked a link
+  //       setTimeout(() => {
+  //           const link = document.createElement("a");
+  //           link.href = `tel:${foundNumber}`;
+  //           link.click();
+  //       }, 1500); 
+        
+  //     } else {
+  //       setStatus("CONTACT NOT FOUND");
+  //       speak(`I am sorry, Sir. I do not have a registered number for ${contactName}.`);
+  //     }
+  //     return;
+  //   }
+
+  //   if (text.includes("play")) {
+  //     let query = text.split("play")[1].trim();
+  //     let platform = "youtube";
+  //     if (query.includes("on spotify")) { platform = "spotify"; query = query.replace("on spotify", "").trim(); } 
+  //     else if (query.includes("on youtube")) { platform = "youtube"; query = query.replace("on youtube", "").trim(); }
+  //     speak(`Right away. Opening ${query} on ${platform}.`);
+  //     if (platform === "spotify") window.open(`https://open.spotify.com/search/${encodeURIComponent(query)}`, "_blank");
+  //     else window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`, "_blank");
+  //     return;
+  //   }
+
+  //   const desktopApps = ["notepad", "word", "excel", "calculator", "vlc", "code", "intellij", "terminal", "whatsapp"];
+  //   const matchedApp = desktopApps.find(app => text.includes(app));
+
+  //   if (text.includes("open") && matchedApp) {
+  //     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  //     speak(`Launching ${matchedApp}.`);
+
+  //     // MOBILE WHATSAPP FIX
+  //     if (matchedApp === "whatsapp" && isMobile) {
+  //        setStatus("LAUNCHING NATIVE APP...");
+  //        // Using the official web API link prevents the browser from blocking it
+  //        const link = document.createElement("a");
+  //        link.href = "https://api.whatsapp.com/send?text="; 
+  //        link.click();
+  //        return;
+  //     }
+
+  //     try {
+  //       await fetch(`${API_BASE_URL}/open-desktop`, {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({ app: matchedApp })
+  //       });
+  //     } catch (err) {
+  //       setStatus("ERR: LOCAL BRIDGE OFFLINE.");
+  //       speak("Sir, my local system bridge is offline.");
+  //     }
+  //     return;
+  //   }
+
+  //   if (text.includes("open")) {
+  //     let site = text.split("open")[1].trim().replace(/(please|for me)/g, "").trim();
+  //     let domain = site.replace(/\s+/g, "");
+  //     if (domain) {
+  //       speak(`Opening website ${site}.`);
+  //       window.open(`https://www.${domain}.com`, "_blank");
+  //     }
+  //     return;
+  //   }
+
+  //   if (text.includes("memory") || text.includes("settings") || text.includes("history") || text.includes("chat")) {
+  //     const route = text.match(/(memory|settings|history|chat)/)[0];
+  //     speak(`Accessing ${route} panel.`);
+  //     navigate(`/dashboard/${route}`);
+  //     return;
+  //   }
+
+  //   // ==========================================
+  //   // AI CORE FALLBACK
+  //   // ==========================================
+  //   setStatus("CONSULTING AI CORE...");
+  //   try {
+  //     const response = await fetch(`${API_BASE_URL}/ask`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ prompt: text })
+  //     });
+  //     const data = await response.json();
+      
+  //     if (data.answer) {
+  //       setStatus("AI RESPONSE RECEIVED");
+  //       speak(data.answer);
+  //     } else {
+  //       speak("I am sorry Sir, I could not generate a response.");
+  //     }
+  //   } catch (error) {
+  //     setStatus("AI CORE OFFLINE");
+  //     speak("Sir, my AI core is offline. Let me search the global network for you instead.");
+  //     window.open(`https://www.google.com/search?q=${encodeURIComponent(text)}`, "_blank");
+  //   }
+  // };
+
+
   const process = async (cmd) => {
-    // 1. CLEAN THE TEXT: Remove periods/commas that break voice recognition
     let text = cmd.toLowerCase().trim().replace(/[.,!?]/g, "");
     const currentUserName = localStorage.getItem("name") || "Boss";
 
@@ -421,26 +580,27 @@ export default function JarvisPage() {
     }
 
     // ==========================================
-    // MOBILE VOICE CALLING FEATURE (FIXED)
+    // MOBILE VOICE CALLING FEATURE (ULTIMATE FIX)
     // ==========================================
     if (text.startsWith("call ")) {
       let contactName = text.replace("call", "").trim();
 
-      // ALL keys MUST be strictly lowercase to match the voice input!
+      // We include common speech-to-text variations for names like Preethi & Vahini
       const phoneBook = {
         "amma": "+916382965810", 
-        "vahini sister": "+917305923367",
+        "vahini": "+917305923367",
+        "sister": "+917305923367",
         "preethi": "+917639593488",
+        "preeti": "+917639593488",
         "appa": "+919865191170",
         "aachi": "+919976955448"
       };
 
-      // Forgiving Search: Checks if the spoken name matches our phonebook
       let foundNumber = null;
       let confirmedName = "";
 
       for (let key in phoneBook) {
-        if (contactName.includes(key) || key.includes(contactName)) {
+        if (contactName.includes(key)) {
           foundNumber = phoneBook[key];
           confirmedName = key;
           break;
@@ -451,11 +611,9 @@ export default function JarvisPage() {
         setStatus(`CALLING ${confirmedName.toUpperCase()}...`);
         speak(`Right away, Sir. Initiating a secure line to ${confirmedName}.`);
         
-        // Trick the browser into thinking the user physically clicked a link
+        // Force the dialer using direct location assignment
         setTimeout(() => {
-            const link = document.createElement("a");
-            link.href = `tel:${foundNumber}`;
-            link.click();
+            window.location.href = `tel:${foundNumber}`;
         }, 1500); 
         
       } else {
@@ -483,13 +641,13 @@ export default function JarvisPage() {
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
       speak(`Launching ${matchedApp}.`);
 
-      // MOBILE WHATSAPP FIX
+      // MOBILE WHATSAPP PERMANENT FIX
       if (matchedApp === "whatsapp" && isMobile) {
          setStatus("LAUNCHING NATIVE APP...");
-         // Using the official web API link prevents the browser from blocking it
-         const link = document.createElement("a");
-         link.href = "https://api.whatsapp.com/send?text="; 
-         link.click();
+         // Using location.href forces the phone OS to open WhatsApp every single time
+         setTimeout(() => {
+             window.location.href = "whatsapp://";
+         }, 1000);
          return;
       }
 
@@ -547,6 +705,7 @@ export default function JarvisPage() {
       window.open(`https://www.google.com/search?q=${encodeURIComponent(text)}`, "_blank");
     }
   };
+
 
   const start = () => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
