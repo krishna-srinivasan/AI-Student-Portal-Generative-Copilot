@@ -429,10 +429,9 @@ export default function JarvisPage() {
       // ALL keys MUST be strictly lowercase to match the voice input!
       const phoneBook = {
         "amma": "+916382965810", 
-        "vahini sister": "+917305923367",
-        "preethi": "+917639593488",
         "vahini": "+917305923367",
-        "sister": "+917305923367",
+        "preethi": "+917639593488",
+        "vagini": "+917305923367",
         "preeti": "+917639593488",
         "appa": "+919865191170",
         "aachi": "+919976955448"
