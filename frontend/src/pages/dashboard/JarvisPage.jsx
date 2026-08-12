@@ -637,7 +637,7 @@ export default function JarvisPage() {
       // MOBILE WHATSAPP FIX
       if (matchedApp === "whatsapp" && isMobile) {
          setStatus("LAUNCHING NATIVE APP...");
-         window.location.href = "whatsapp://";
+         window.location.href = "https://api.whatsapp.com/send?text=";
          return;
       }
 
