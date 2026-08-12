@@ -390,7 +390,8 @@ export default function JarvisPage() {
   };
 
   const process = async (cmd) => {
-    let text = cmd.toLowerCase().trim();
+    // 1. CLEAN THE TEXT: Remove periods/commas that break voice recognition
+    let text = cmd.toLowerCase().trim().replace(/[.,!?]/g, "");
     const currentUserName = localStorage.getItem("name") || "Boss";
 
     if (text.includes("gold theme") || text.includes("golden theme")) {
@@ -399,6 +400,7 @@ export default function JarvisPage() {
       setStatus("THEME: GOLD ACTIVATED");
       return;
     }
+    
     if (text.includes("cyan theme") || text.includes("original theme") || text.includes("default theme")) {
       setActiveTheme("cyan");
       speak("Reverting to original cyan interface, Sir.");
@@ -418,37 +420,47 @@ export default function JarvisPage() {
       return;
     }
 
-
     // ==========================================
-    // MOBILE VOICE CALLING FEATURE
+    // MOBILE VOICE CALLING FEATURE (FIXED)
     // ==========================================
     if (text.startsWith("call ")) {
-      // 1. Extract the name the user said after the word "call"
       let contactName = text.replace("call", "").trim();
 
-      // 2. JARVIS's Virtual Phonebook (Replace with actual numbers!)
-      // Since web browsers cannot read mobile contacts for privacy, we store them here.
+      // ALL keys MUST be strictly lowercase to match the voice input!
       const phoneBook = {
-        "AMMA": "+916382965810", 
-        "Vahini Sister": "+917305923367",
-        "Preethi": "+917639593488",
-        "Appa": "+919865191170" ,
-        "Aachi" : "+919976955448"
+        "amma": "+916382965810", 
+        "vahini sister": "+917305923367",
+        "preethi": "+917639593488",
+        "appa": "+919865191170",
+        "aachi": "+919976955448"
       };
 
-      // 3. Check if the requested name exists in our phonebook
-      if (phoneBook[contactName]) {
-        setStatus(`CALLING ${contactName.toUpperCase()}...`);
-        speak(`Right away, Sir. Initiating a secure line to ${contactName}.`);
+      // Forgiving Search: Checks if the spoken name matches our phonebook
+      let foundNumber = null;
+      let confirmedName = "";
+
+      for (let key in phoneBook) {
+        if (contactName.includes(key) || key.includes(contactName)) {
+          foundNumber = phoneBook[key];
+          confirmedName = key;
+          break;
+        }
+      }
+
+      if (foundNumber) {
+        setStatus(`CALLING ${confirmedName.toUpperCase()}...`);
+        speak(`Right away, Sir. Initiating a secure line to ${confirmedName}.`);
         
-        // 4. Trigger the mobile dialer using the 'tel:' deep link
+        // Trick the browser into thinking the user physically clicked a link
         setTimeout(() => {
-            window.location.href = `tel:${phoneBook[contactName]}`;
-        }, 1500); // Small 1.5 second delay so JARVIS can finish speaking first
+            const link = document.createElement("a");
+            link.href = `tel:${foundNumber}`;
+            link.click();
+        }, 1500); 
         
       } else {
         setStatus("CONTACT NOT FOUND");
-        speak(`I am sorry, Sir. I do not have a registered number for ${contactName} in my encrypted database.`);
+        speak(`I am sorry, Sir. I do not have a registered number for ${contactName}.`);
       }
       return;
     }
@@ -468,19 +480,19 @@ export default function JarvisPage() {
     const matchedApp = desktopApps.find(app => text.includes(app));
 
     if (text.includes("open") && matchedApp) {
-      // 1. Check if the user is on a mobile phone
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      
       speak(`Launching ${matchedApp}.`);
 
-      // 2. MOBILE OVERRIDE: If WhatsApp is requested on a phone, use the native Deep Link
+      // MOBILE WHATSAPP FIX
       if (matchedApp === "whatsapp" && isMobile) {
          setStatus("LAUNCHING NATIVE APP...");
-         window.location.href = "whatsapp://send";
+         // Using the official web API link prevents the browser from blocking it
+         const link = document.createElement("a");
+         link.href = "https://api.whatsapp.com/send?text="; 
+         link.click();
          return;
       }
 
-      // 3. DESKTOP BEHAVIOR: Send to Python backend to open the local software
       try {
         await fetch(`${API_BASE_URL}/open-desktop`, {
           method: "POST",
@@ -495,7 +507,7 @@ export default function JarvisPage() {
     }
 
     if (text.includes("open")) {
-      let site = text.split("open")[1].trim().replace(/(please|for me|\.)/g, "").trim();
+      let site = text.split("open")[1].trim().replace(/(please|for me)/g, "").trim();
       let domain = site.replace(/\s+/g, "");
       if (domain) {
         speak(`Opening website ${site}.`);
@@ -511,6 +523,9 @@ export default function JarvisPage() {
       return;
     }
 
+    // ==========================================
+    // AI CORE FALLBACK
+    // ==========================================
     setStatus("CONSULTING AI CORE...");
     try {
       const response = await fetch(`${API_BASE_URL}/ask`, {
