@@ -121,7 +121,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    padding: 20px 40px; /* Reduced from 60px to prevent vertical pushing */
+    padding: 20px 40px; 
     box-sizing: border-box;
 }
 
@@ -139,7 +139,7 @@ body {
 ===================================================== */
 .robot-glow {
     position: absolute;
-    width: 320px; /* Reduced from 420px */
+    width: 320px; 
     height: 320px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(0,255,255,.45), transparent 70%);
@@ -148,8 +148,8 @@ body {
 
 .robot-image {
     position: relative;
-    width: 400px; /* Reduced from 520px */
-    max-height: 75vh; /* Fits within viewport height cleanly */
+    width: 400px; 
+    max-height: 75vh; 
     object-fit: contain;
     animation: robotFloat 5s ease-in-out infinite;
     filter: drop-shadow(0 0 20px cyan) drop-shadow(0 0 40px #00bfff);
@@ -161,7 +161,7 @@ body {
 .login-card {
     width: 100%;
     max-width: 400px;
-    padding: 22px 28px; /* Reduced from 35px to tighten vertical card height */
+    padding: 22px 28px; 
     border-radius: 24px;
     background: rgba(12,18,38,.78);
     backdrop-filter: blur(22px);
@@ -176,21 +176,21 @@ body {
    LOGO & TYPOGRAPHY
 ===================================================== */
 .logo-circle {
-    width: 54px; /* Reduced from 70px */
+    width: 54px; 
     height: 54px; 
-    margin: 0 auto 10px auto; /* Tightened margin bottom */
+    margin: 0 auto 10px auto; 
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px; /* Reduced icon size */
+    font-size: 24px; 
     background: linear-gradient(135deg, #00d4ff, #6b5cff);
     box-shadow: 0 0 18px cyan, 0 0 35px #6b5cff;
 } 
 
 .portal-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 22px; /* Reduced from 26px */
+    font-size: 22px; 
     line-height: 1.2;
     color: #ffffff;
     text-align: center;
@@ -202,13 +202,13 @@ body {
     text-align: center;
     color: #9fb6d6;
     font-size: 13px;
-    margin-bottom: 12px; /* Reduced from 25px */
+    margin-bottom: 12px; 
 }
 
 .divider {
     width: 100%;
     height: 1px;
-    margin-bottom: 14px; /* Reduced from 25px */
+    margin-bottom: 14px; 
     background: linear-gradient(to right, transparent, cyan, transparent);
 }
 
@@ -217,7 +217,7 @@ body {
 ===================================================== */
 .input-box {
     position: relative;
-    margin-bottom: 12px; /* Reduced from 20px */
+    margin-bottom: 12px; 
 }
 
 .input-icon {
@@ -231,7 +231,7 @@ body {
 
 .input-box input {
     width: 100%;
-    height: 42px; /* Reduced from 48px */
+    height: 42px; 
     padding-left: 44px;
     padding-right: 44px;
     border-radius: 10px;
@@ -277,7 +277,7 @@ body {
 ===================================================== */
 .login-btn {
     width: 100%;
-    height: 42px; /* Reduced from 48px */
+    height: 42px; 
     border: none;
     border-radius: 10px;
     margin-top: 4px;
@@ -302,7 +302,7 @@ body {
    FOOTER & BOTTOM LINKS
 ===================================================== */
 .login-footer {
-    margin-top: 12px; /* Reduced from 25px */
+    margin-top: 12px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -377,13 +377,10 @@ body {
 }
 
 /* =====================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN (FIXED FOR MOBILE)
 ===================================================== */
-@media(max-width:1200px) {
-    .main-container { gap: 20px; }
-    .robot-image { width: 320px; }
-}
 
+/* Tablets and medium screens */
 @media(max-width:950px) {
     .main-container {
         flex-direction: column;
@@ -396,17 +393,25 @@ body {
     .portal-title { font-size: 20px; }
 }
 
-@media(max-width:600px) {
-    .robot-image { width: 150px; }
-    .login-card { padding: 18px; }
-    .portal-title { font-size: 18px; }
-    .portal-subtitle { font-size: 12px; }
+/* Phones (This specific block hides the robot and centers the form) */
+@media(max-width:768px) {
+    .left-panel { 
+        display: none; /* Hides the entire robot image and glow on small screens */
+    }
+    .main-container { 
+        padding: 15px; 
+        justify-content: center;
+    }
+    .right-panel {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .login-card { 
+        padding: 25px 20px; 
+        width: 100%;
+        max-width: 100%; /* Allows the form to take up comfortable space */
+    }
+    .portal-title { font-size: 22px; }
+    .portal-subtitle { font-size: 13px; }
 }
-
-/* =====================================================
-   SCROLLBAR & SELECTION
-===================================================== */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-thumb { background: #00d8ff; border-radius: 20px; }
-::selection { background: #00d9ff; color: #000; }
-
