@@ -503,11 +503,15 @@
        so your "New Chat" button, Logo, and History list will all reappear! */
 
     /* Adjust Header for Mobile */
-    /* Adjust Header for Mobile */
-    .header { 
-        height: 70px; 
-        padding: 0 15px; 
-        display: flex !important; 
+    /* 2. Force Header and Toggle Button to show on mobile */
+    .header {
+        display: flex !important;
+        height: 75px !important;
+        z-index: 100 !important; /* Forces header to the very top layer */
+    }
+    
+    .sidebar-toggle-btn {
+        display: flex !important; /* Makes the ☰ button visible */
     }
     .header-right { gap: 10px; }
     .profile span { display: none; }
