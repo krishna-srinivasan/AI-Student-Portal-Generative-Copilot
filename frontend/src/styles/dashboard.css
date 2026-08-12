@@ -414,7 +414,7 @@
     opacity: 0;
 }
 
-.sidebar-toggle-btn {
+/* .sidebar-toggle-btn {
     background: #111b36;
     color: #00eaff;
     border: 1px solid rgba(0, 255, 255, 0.2);
@@ -432,8 +432,34 @@
 .sidebar-toggle-btn:hover {
     background: #1a274c;
     box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+} */
+
+
+
+/* ================= SIDEBAR TOGGLE BUTTON ================= */
+.sidebar-toggle-btn {
+    background: #111b36;
+    color: #00eaff;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    
+    /* 1. Hide on Desktop by default */
+    display: none; 
+    
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.3s;
+    flex-shrink: 0;
 }
 
+.sidebar-toggle-btn:hover {
+    background: #1a274c;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
 
 
 /* ================= RESPONSIVE MOBILE DESIGN ================= */
@@ -477,7 +503,12 @@
        so your "New Chat" button, Logo, and History list will all reappear! */
 
     /* Adjust Header for Mobile */
-    .header { height: 70px; padding: 0 15px; } 
+    /* Adjust Header for Mobile */
+    .header { 
+        height: 70px; 
+        padding: 0 15px; 
+        display: flex !important; 
+    }
     .header-right { gap: 10px; }
     .profile span { display: none; }
     .header h2 { font-size: 16px; }
