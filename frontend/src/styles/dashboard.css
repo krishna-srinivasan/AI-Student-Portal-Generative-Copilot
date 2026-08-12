@@ -241,7 +241,7 @@
     border-radius: 18px;
     word-break: break-word;
     overflow-wrap: anywhere;
-    font-size: 14.5px; /* Shrunk from large text to medium */
+    font-size: 14.5px;
     line-height: 1.6;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
@@ -250,7 +250,7 @@
     background: #121a30;
     color: #e2e8f0;
     border: 1px solid rgba(0, 255, 255, 0.1);
-    border-top-left-radius: 4px; /* Gives it a chat "tail" */
+    border-top-left-radius: 4px;
 }
 
 .message.user .bubble {
@@ -395,45 +395,18 @@
     box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
 }
 
-
-/* ================= SIDEBAR COLLAPSE SUPPORT ================= */
-/* .sidebar.collapsed {
-    width: 0 !important;
-    padding: 0 !important;
-    overflow: hidden;
-    border: none;
-} */
- 
-/* ================= SIDEBAR COLLAPSE SUPPORT ================= */
-.sidebar.collapsed {
-    width: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    overflow: hidden;
-    border: none;
-    opacity: 0;
+/* ================= HISTORY PAGE ================= */
+.history-container {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 30px;
+    color: white;
 }
 
-/* .sidebar-toggle-btn {
-    background: #111b36;
-    color: #00eaff;
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 18px;
-    transition: 0.3s;
-}
-
-.sidebar-toggle-btn:hover {
-    background: #1a274c;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
-} */
-
+.history-container::-webkit-scrollbar { width: 6px; }
+.history-container::-webkit-scrollbar-thumb { background: #0084a8; border-radius: 10px; }
 
 
 /* ================= SIDEBAR TOGGLE BUTTON ================= */
@@ -445,7 +418,7 @@
     height: 42px;
     border-radius: 50%;
     
-    /* 1. Hide on Desktop by default */
+    /* Hide on Desktop by default */
     display: none; 
     
     align-items: center;
@@ -463,6 +436,7 @@
 
 
 /* ================= RESPONSIVE MOBILE DESIGN ================= */
+
 @media (max-width: 950px) {
     .sidebar { width: 220px; padding: 20px 15px; }
     .header { padding: 0 20px; }
@@ -471,116 +445,100 @@
 }
 
 
+/* THE UNIFIED BULLETPROOF MOBILE FIX */
 @media (max-width: 768px) {
-    /* Set container to relative so the sidebar can overlay it */
-    .dashboard-container { 
-        flex-direction: column; 
-        position: relative; 
-    }
     
-    .main-content { 
-        width: 100%; 
-        height: 100vh;
-    }
-    
-    /* 📱 NEW: Left Side Slide-Out Drawer overlay */
-    .sidebar {
-        position: absolute;
-        top: 70px; /* Starts exactly below your Header */
-        left: 0;
-        width: 260px !important;
-        height: calc(100vh - 70px) !important;
-        flex-direction: column; /* Stack items vertically like desktop */
-        padding: 25px 20px !important; 
-        background: #050816; /* Solid dark background */
-        z-index: 50; /* Floats above the chat */
-        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.7);
-        border-top: none;
-        border-right: 1px solid rgba(0, 255, 255, 0.15);
+    /* Lock the main screen so the address bar doesn't break things */
+    html, body, #root {
+        height: 100dvh !important;
+        overflow: hidden !important;
     }
 
-    /* Note: We removed the display:none lines from the old version 
-       so your "New Chat" button, Logo, and History list will all reappear! */
+    .dashboard-container {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100dvh !important;
+        width: 100vw !important;
+    }
 
-    /* Adjust Header for Mobile */
-    /* 2. Force Header and Toggle Button to show on mobile */
+    .main-content {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        height: 100dvh !important;
+        flex: 1 !important;
+    }
+
+    /* Keep header in the layout flow so it doesn't vanish */
     .header {
         display: flex !important;
-        height: 75px !important;
-        z-index: 100 !important; /* Forces header to the very top layer */
+        position: relative !important; 
+        width: 100% !important;
+        height: 70px !important;
+        flex-shrink: 0 !important; 
+        z-index: 100 !important;
+        background: rgba(10, 15, 30, 1) !important;
+        padding: 0 15px !important;
+        align-items: center !important;
+        justify-content: space-between !important;
     }
-    
+
+    .header h2 { font-size: 18px !important; margin: 0 !important; }
+    .header p { display: none !important; } 
+    .header-right .profile span { display: none !important; }
+
+    /* Show the hamburger menu button */
     .sidebar-toggle-btn {
-        display: flex !important; /* Makes the ☰ button visible */
+        display: flex !important;
+        min-width: 42px !important;
+        min-height: 42px !important;
     }
-    .header-right { gap: 10px; }
-    .profile span { display: none; }
-    .header h2 { font-size: 16px; }
-    
-    /* Adjust Chat Space */
-    .messages { padding: 15px; }
-    .bubble { max-width: 90%; font-size: 13.5px; padding: 12px 16px; }
-    .robot-small { font-size: 20px; }
-    
-    /* Adjust Chat Input */
-    .chat-input { padding: 12px 15px; gap: 10px; }
-    .chat-input input { height: 48px; font-size: 14px; padding: 0 15px; }
-    .chat-input button { width: 48px; height: 48px; font-size: 16px; }
 
+    /* Make the chat area fill exactly the rest of the screen */
+    .dynamic-view-area {
+        flex: 1 !important;
+        margin-top: 0 !important; 
+        height: auto !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* Slider Sidebar Overlay */
+    .sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 280px !important;
+        height: 100dvh !important;
+        z-index: 9999 !important;
+        background: #050816 !important;
+        transition: transform 0.3s ease-in-out !important;
+        transform: translateX(0) !important; 
+        border-right: 1px solid rgba(0, 255, 255, 0.3) !important;
+    }
+
+    .sidebar.collapsed {
+        transform: translateX(-100%) !important;
+    }
+
+    /* Fix Chat Bubbles */
+    .messages { padding: 15px !important; }
+    .bubble { max-width: 85% !important; font-size: 14px !important; padding: 12px 16px !important; }
+    
+    /* Fix Input Box & Button Size */
+    .chat-input { padding: 10px 15px 15px 15px !important; gap: 10px !important; flex-shrink: 0 !important; }
+    .chat-input input { height: 48px !important; border-radius: 25px !important; }
+    .chat-input button { width: 48px !important; height: 48px !important; flex-shrink: 0 !important; }
+
+    /* Jarvis Layout Backup from your original code */
     .your-main-jarvis-container {
-    flex-direction: column; /* Stacks the columns vertically */
-    align-items: center;
-    overflow-y: auto; /* Allows scrolling down */
-  }
-
-  .left-panel, .center-core, .right-panel {
-    width: 100%; /* Makes each section take full width */
-    margin-bottom: 20px;
-  }
-  
-}
-
-
-/* ================= HISTORY PAGE ================= */
-.history-container {
-    flex: 1;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 30px;
-    color: white;
-}
-
-/* Custom Scrollbar for History Page */
-.history-container::-webkit-scrollbar { width: 6px; }
-.history-container::-webkit-scrollbar-thumb { background: #0084a8; border-radius: 10px; }
-
-/* When the screen is 768px or smaller (Tablets and Mobiles) */
-
-/* ================= ULTIMATE MOBILE CHAT FIX ================= */
-@media (max-width: 768px) {
-    /* 1. Pull the chat bubbles away from the edges */
-    .bubble {
-        max-width: 82% !important; /* Gives the bubbles breathing room */
-        padding: 12px 16px !important;
-        font-size: 14px !important;
+        flex-direction: column; 
+        align-items: center;
+        overflow-y: auto; 
     }
-
-    /* 2. Lock the send button so it never squishes into an oval */
-    .chat-input button {
-        width: 48px !important;
-        height: 48px !important;
-        flex-shrink: 0 !important; /* This magic command protects its circular shape */
-    }
-
-    /* 3. Give the input area breathing room at the bottom of the phone screen */
-    .chat-input {
-        padding: 12px 15px 20px 15px !important; 
-        gap: 12px !important;
-    }
-
-    .chat-input input {
-        height: 48px !important;
-        border-radius: 25px !important;
+    .left-panel, .center-core, .right-panel {
+        width: 100%; 
+        margin-bottom: 20px;
     }
 }
