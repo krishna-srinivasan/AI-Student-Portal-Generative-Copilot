@@ -120,7 +120,6 @@
 
 // export default MemoryPage;
 
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
@@ -170,8 +169,17 @@ function MemoryPage() {
   };
 
   return (
-    <div style={{ padding: "40px", color: "white", maxWidth: "800px", margin: "0 auto" }}>
-      
+    <div 
+      style={{ 
+        padding: "20px 16px", 
+        color: "white", 
+        maxWidth: "800px", 
+        margin: "0 auto",
+        width: "100%", 
+        boxSizing: "border-box", 
+        overflowX: "hidden" 
+      }}
+    >
       <h2 style={{ color: "#00d4ff", marginBottom: "10px", fontSize: "2rem" }}>
         🧠 AI Memory Base
       </h2>
@@ -197,16 +205,16 @@ function MemoryPage() {
                 justifyContent: "space-between",
                 alignItems: "center",
                 background: "#121a30",
-                padding: "20px",
+                padding: "16px 12px",
                 borderRadius: "12px",
                 border: "1px solid rgba(0, 255, 255, 0.1)",
                 boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
-                gap: "12px",
+                gap: "8px",
                 width: "100%",
                 boxSizing: "border-box"
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "15px", flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", flex: 1, minWidth: 0 }}>
                 <span style={{ fontSize: "24px", flexShrink: 0 }}>📄</span>
                 <div style={{ minWidth: 0, flex: 1 }}>
                   <h4 
