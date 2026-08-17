@@ -24,13 +24,13 @@ function UploadPDFPage() {
 
             const token = localStorage.getItem("token");
 
-            await api.post(
+           await api.post(
                 "/upload/pdf",
                 formData,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`
-                        // "Content-Type": "multipart/form-data"
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data"
                     }
                 }
             );
